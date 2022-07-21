@@ -6,16 +6,16 @@ class Triangle
     @c = c
   end
   def kind
-    [a, b, c].permutation do |sides|
-      raise TriangleError unless sides[0] + sides[1] > sides[2]
-    end
-    case [a,b,c].uniq.size
-      when 3: :scalene
-      when 2: :isosceles
-      when 1: :equilateral
+    if !(a + b > c && b + c > a && a + c > b)
+      raise TriangleError
+    elsif a == b && b == c
+      :equilateral
+    elsif a == b || b == c || a == c
+      :isosceles
+    else
+      :scalene
     end
   end
   class TriangleError < StandardError
   end
 end
-
